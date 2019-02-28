@@ -6,7 +6,7 @@ services:
     volumes:
      - db_data:/var/lib/mysql
     restart: always
-    environment: &env
+    environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: staytus
       MYSQL_USER: staytus
@@ -24,8 +24,8 @@ services:
     volumes:
       - .:/staytus
     environment:
-      <<: *env
-      MYSQL_HOST: db
+      DB_HOST: db
+      RAILS_ENV: production
 
 volumes:
   db_data: {}
