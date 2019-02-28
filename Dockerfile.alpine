@@ -1,0 +1,18 @@
+FROM ruby:2.6.1-alpine
+
+RUN apk add --update --no-cache \
+  build-base \
+  mariadb-dev \
+  nodejs \
+  tzdata \
+  bash
+
+USER root
+
+WORKDIR /staytus
+COPY Gemfile* ./
+RUN bundle install --binstubs --without development test
+COPY . ./
+
+EXPOSE 5000
+ENTRYPOINT ["/staytus/docker-start-simple.sh"]

@@ -17,8 +17,8 @@ services:
      - db
     build:
       context: .
-      dockerfile: Dockerfile.dev
-    command: /opt/staytus/docker-start-dev.sh
+      dockerfile: Dockerfile.alpine
+    command: /opt/staytus/docker-start-simple.sh
     ports:
       - 5000:5000
     volumes:

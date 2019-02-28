@@ -1,4 +1,4 @@
-FROM ruby
+FROM ruby:2.6.1
 
 USER root
 
@@ -14,4 +14,4 @@ RUN bundle install --binstubs --without development test
 COPY . ./
 
 EXPOSE 5000
-ENTRYPOINT ["/staytus/docker-start-dev.sh"]
+ENTRYPOINT ["/staytus/docker-start-simple.sh"]
