@@ -3,29 +3,28 @@ version: '2'
 services:
   db:
     image: mysql:5.7
-    volumes:
-     - db_data:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: staytus
       MYSQL_USER: staytus
       MYSQL_PASSWORD: staytus
+    volumes:
+     - db_data:/var/lib/mysql
 
   app:
-    depends_on:
-     - db
     build:
       context: .
       dockerfile: Dockerfile.alpine
-    command: /opt/staytus/docker-start-simple.sh
+    depends_on:
+     - db
     ports:
       - 5000:5000
     volumes:
       - .:/staytus
     environment:
-      DB_HOST: db
       RAILS_ENV: production
+      DB_HOST: db
 
 volumes:
   db_data: {}

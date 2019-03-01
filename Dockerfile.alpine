@@ -3,9 +3,8 @@ FROM ruby:2.6.1-alpine
 RUN apk add --update --no-cache \
   build-base \
   mariadb-dev \
-  nodejs \
   tzdata \
-  bash
+  nodejs
 
 USER root
 
@@ -14,5 +13,13 @@ COPY Gemfile* ./
 RUN bundle install --binstubs --without development test
 COPY . ./
 
+ARG DB_HOST
+ARG DB_USER
+ARG DB_PASSWORD
+ARG DB_DATABASE
+
+RUN bundle exec rake staytus:build
+
 EXPOSE 5000
-ENTRYPOINT ["/staytus/docker-start-simple.sh"]
+
+ENTRYPOINT ["./docker-up.sh"]
