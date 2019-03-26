@@ -40,7 +40,7 @@ module Staytus
           request = Net::HTTP::Post.new(uri.request_uri, header)
           request.body = message.to_json
 
-          Rails.logger.debug message.to_json
+          Rails.logger.debug "WebHook message: " + message.to_json
 
           # Send the request
           begin

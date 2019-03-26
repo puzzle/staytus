@@ -23,8 +23,9 @@ services:
     volumes:
       - .:/staytus
     environment:
-      RAILS_ENV: production
       DB_HOST: db
+      RAILS_ENV: production
+      LOG_LEVEL: DEBUG
 
 volumes:
   db_data: {}
