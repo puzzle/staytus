@@ -42,9 +42,9 @@ class Maintenance < ActiveRecord::Base
   scope :upcoming, -> { where("start_at > ?", Time.now).open }
 
   before_validation :convert_times
-  after_save :create_or_update_history_item
-  after_destroy :destroy_history_item
-  after_commit :send_notifications_on_create, :on => :create
+  after_commit :create_or_update_history_item, on: [:create, :update]
+  after_commit :destroy_history_item, on: :destroy
+  after_commit :send_notifications_on_create, on: :create
 
   florrick do
     string :title
@@ -139,11 +139,9 @@ class Maintenance < ActiveRecord::Base
   end
 
   def create_or_update_history_item
-    if self.start_at_changed?
-      item = HistoryItem.where(:item => self).first_or_initialize
-      item.date = self.start_at
-      item.save
-    end
+    item = HistoryItem.where(:item => self).first_or_initialize
+    item.date = self.start_at
+    item.save
   end
 
   def destroy_history_item
